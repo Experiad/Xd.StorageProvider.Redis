@@ -189,3 +189,9 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 .vs/
+
+result/
+result.*
+nugetoutput/
+tools/
+*.dcvr

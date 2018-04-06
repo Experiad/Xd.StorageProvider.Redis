@@ -21,7 +21,7 @@ var projects = GetFiles("./**/*.csproj");
 var solution = solutions.First().FullPath;
     
 var buildNumber = isOnTeamCity ? TeamCity.Environment.Build.Number : "0";
-var version = "2.0.0-rc2-" + buildNumber;
+var version = "2.0.0-" + buildNumber;
 
 var nugetStore = Argument("nuget_store", default(string)) ?? EnvironmentVariable("nuget_store");
 var nugetKey = Argument("nuget_key", default(string)) ?? EnvironmentVariable("nuget_key");
