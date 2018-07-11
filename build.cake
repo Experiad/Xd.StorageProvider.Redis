@@ -54,6 +54,9 @@ Task("Build")
 	};
 
      DotNetCoreBuild(solution, settings);
+
+	 settings.Configuration = "Release";
+     DotNetCoreBuild(solution, settings);
 });
 
 Task("Test")
@@ -124,7 +127,7 @@ Task("NuGetPack")
 
 	var settings = new DotNetCorePackSettings
 	{
-		Configuration = "Debug",
+		Configuration = "Release",
 		OutputDirectory = nugetPath,
 		NoBuild = true,
 		NoRestore = true,
@@ -140,27 +143,13 @@ Task("NuGetPack")
 	}
 });
 
-
-Task("NuGetPublish")
-	.IsDependentOn("NuGetPack")
-	.Does(() => 
-{
-    var packages = GetFiles("./nugetoutput/*.nupkg");
-
-	// Push the package.
-	NuGetPush(packages, new NuGetPushSettings {
-		Source = nugetStore,
-		ApiKey = nugetKey
-	});
-});
-
 ///////////////////////////////////////////////////////////////////////////////
 // TARGETS
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Default")
     .Description("This is the default task which will be ran if no specific target is passed in.")
-    .IsDependentOn("NuGetPublish");
+    .IsDependentOn("NuGetPack");
 
 ///////////////////////////////////////////////////////////////////////////////
 // EXECUTION
